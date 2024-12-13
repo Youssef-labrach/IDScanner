@@ -13,7 +13,6 @@ import java.io.IOException;
 @Service
 public class OcrService {
 
-    private static final Logger log = LoggerFactory.getLogger(OcrService.class);
 
     public String extractText(MultipartFile file) throws IOException, TesseractException {
         // Set the TESSDATA_PREFIX environment variable
@@ -21,8 +20,7 @@ public class OcrService {
 
         Tesseract tesseract = new Tesseract();
         tesseract.setDatapath("C:\\Program Files\\Tesseract-OCR\\tessdata"); // Update the path to Tesseract language data files
-        tesseract.setLanguage("eng"); // Set the language to English
-        log.info("Processing file: {}", file.getOriginalFilename());
+        //.setLanguage("eng"); // Set the language to English
 
         // Save the file temporarily for OCR processing
         String originalFileName = file.getOriginalFilename();
@@ -30,19 +28,12 @@ public class OcrService {
         File tempFile = File.createTempFile("temp", fileExtension);
         file.transferTo(tempFile);
 
-        log.info("Temporary file saved at: {}", tempFile.getAbsolutePath());
 
         // Perform OCR
         String extractedText = tesseract.doOCR(tempFile);
 
-        log.info("Extracted text: {}", extractedText);
 
-        // Clean up the temporary file
-        if (tempFile.delete()) {
-            log.info("Temporary file deleted successfully.");
-        } else {
-            log.warn("Failed to delete temporary file.");
-        }
+
 
         return extractedText;
     }

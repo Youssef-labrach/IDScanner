@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,7 +24,11 @@ public class Document {
     private String uploadDate;
 
     private String processedDate;
-    // Getters and Setters
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Long getId() {
         return id;
     }
@@ -62,5 +67,13 @@ public class Document {
 
     public void setProcessedDate(String processedDate) {
         this.processedDate = processedDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

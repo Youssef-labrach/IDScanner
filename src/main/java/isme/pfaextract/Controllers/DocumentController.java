@@ -3,7 +3,6 @@ package isme.pfaextract.Controllers;
 import isme.pfaextract.Models.Document;
 import isme.pfaextract.Repos.DocumentRepository;
 import isme.pfaextract.Services.OcrService;
-import lombok.RequiredArgsConstructor;
 import net.sourceforge.tess4j.TesseractException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +24,7 @@ public class DocumentController {
         this.documentRepository = documentRepository;
         this.ocrService = ocrService;
     }
+
     @PostMapping("/upload")
     public ResponseEntity<Document> uploadDocument(@RequestParam("file") MultipartFile file) {
         try {
