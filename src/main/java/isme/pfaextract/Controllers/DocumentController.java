@@ -31,7 +31,12 @@ public class DocumentController {
         this.userRepository = userRepository;
 
     }
-
+    @GetMapping("/userhistorique/{userId}")
+    public ResponseEntity<List<Document>> getDocumentsByUser(@PathVariable Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        List<Document> documents = documentRepository.findByUser(user);
+        return ResponseEntity.ok(documents);
+    }
     @PostMapping("/upload")
     public ResponseEntity<Document> uploadDocument(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) {
         try {
